@@ -1,0 +1,26 @@
+CompanyView {
+    display: flex;
+    flex-direction: column;
+}
+
+.CompanyCard {
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    float: right;
+}
+
+.CompanyDetails {
+    margin: 15;
+    display: flex;
+    float: left;
+    max-width: 600px;
+}
+
+.CompanyFinancials {
+    margin: 15;
+    display: flex;
+    float: left;
+}

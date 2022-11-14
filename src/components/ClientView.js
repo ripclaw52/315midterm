@@ -20,7 +20,7 @@ const ClientView = ({ client }) => {
         axios
         .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/portfolio.php?user="+client)
         .then((response) => {
-            console.log(response);
+            /*console.log(response);*/
             setPortfolio(response.data);
         })
         .catch((error) => {

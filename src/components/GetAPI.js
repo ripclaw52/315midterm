@@ -30,7 +30,7 @@ function GetAPI() {
     }
 
     useEffect(() => {
-        getAllClientData();
+        /*getAllClientData();*/
         getAllCompaniesData();
     }, []);
 
