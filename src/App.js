@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from '@mui/material';
+import TitleBar from './components/TitleBar';
+import HomeView from './components/HomeView';
+import ClientView from './components/ClientView';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <TitleBar props={"Home - CMPT 315 Midterm"} />
+        <Container >
+          <HomeView />
+          <ClientView />
+        </Container>
+      </div>
+    </>
   );
 }
 
