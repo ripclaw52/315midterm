@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ClientDetails from "../components/ClientDetails";
 import PortfolioDetails from "../components/PortfolioDetails";
+import PortfolioSummary from "../components/PortfolioSummary";
 import StockCard from "../components/StockCard";
 import TitleBar from "../components/TitleBar";
 
@@ -67,8 +69,10 @@ const ClientView = ({ guid }) => {
     return (
         <>
         <TitleBar titleName={clientFullname} />
+        <ClientDetails clientList={clientName}/>
+        <PortfolioSummary portfolioList={copyPortfolio}/>
         { copiedPortfolio.map(copyPort =>
-            <StockCard key={copyPort.symbol} symbol={copyPort.symbol} name={copyPort.name} />
+            <StockCard value={copyPort.symbol} key={copyPort.symbol} symbol={copyPort.symbol} name={copyPort.name} />
         ) }
         { <PortfolioDetails list={portfolio} /> }
         </>

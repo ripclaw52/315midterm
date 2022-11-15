@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ClientView from "./ClientView";
+
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import ClientView from "./ClientView";
 import TitleBar from "../components/TitleBar";
 
-const HomeView = ({ active }) => {
+const HomeView = () => {
+    
     const [data, setData] = useState([]);
     const [value, setValue] = useState('');
 
@@ -32,6 +34,7 @@ const HomeView = ({ active }) => {
         console.log(e.target.value);
     };
 
+    if (data.length > 0) {
     return (
         <>
         <TitleBar titleName={"Home - React Midterm Project"}/>
@@ -46,12 +49,13 @@ const HomeView = ({ active }) => {
                             label="Choose a Client"
                             onChange={handleChange}
                         >
-                            {data.map(item => <MenuItem key={item.guid} value={item.guid}>{item.firstname} {item.lastname}</MenuItem>)}
+                            {data.map(item => <MenuItem key={item.id} value={item.guid}>{item.firstname} {item.lastname}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Box>
             </div>
         </>
     );
+    }
 }
 export default HomeView;
