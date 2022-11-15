@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+
 import axios from "axios";
+
 import PlotlyGraph from "../components/PlotlyGraph"
 import CompanyDetails from "../components/CompanyDetails";
-import { bgcolor } from "@mui/system";
+import CompanyFinancials from "../components/CompanyFinancials";
 
 const CompanyView = ({ symbol }) => {
     const [companyHistory, setCompanyHistory] = useState([]);
@@ -47,17 +52,21 @@ const CompanyView = ({ symbol }) => {
         getCompanyState();
     }, []);
 
+    let finance = JSON.parse(JSON.stringify(companyState));
+    //console.log(finance[0].financials.years);
+
     if (companyHistory.length >= 1) {
     return (
         <>
-            <CompanyDetails companyState={companyState[0]}/>
+            <CompanyDetails companyDetails={finance[0]} />
+            <CompanyFinancials financials={finance[0].financials}/>
 
-            <Card className="CompanyCard" variant="outlined" sx={{ minHeight: 400, minWidth: 800, bgcolor: "lightblue"}}>
+            <Card className="CompanyCard" variant="outlined" >
                 <CardContent>
                     <PlotlyGraph history={companyHistory} type={"high+low"} />
                 </CardContent>
             </Card>
-            <Card className="CompanyCard" variant="outlined" sx={{ minHeight: 400, minWidth: 800, bgcolor: "lightblue" }}>
+            <Card className="CompanyCard" variant="outlined" >
                 <CardContent>
                     <PlotlyGraph history={companyHistory} type={"volume"} />
                 </CardContent>
