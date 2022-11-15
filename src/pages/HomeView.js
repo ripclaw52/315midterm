@@ -7,8 +7,9 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ClientView from "./ClientView";
 
-const HomeView = () => {
+const HomeView = ({ active }) => {
     const [data, setData] = useState([]);
+
     const [value, setValue] = useState('');
 
     const getAllClientData = () => {
@@ -34,7 +35,7 @@ const HomeView = () => {
     return (
         <>
         {
-            (value === '') ? (
+            (value === 1 || value === '') ? (
             <div className="HomeView">
                 <Box sx={{ maxWidth: 800 }}>
                     <FormControl fullWidth margin="normal" size="string" variant="filled">
@@ -52,7 +53,7 @@ const HomeView = () => {
                 </Box>
             </div>
             ) : (
-                <ClientView guid={value}/>
+                <ClientView guid={value} />
             )
         }
         </>

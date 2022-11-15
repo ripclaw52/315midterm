@@ -1,23 +1,41 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import './App.css';
-import ResponsiveSideBar from "./components/ResponsiveSideBar";
-import { Route, Routes } from 'react-router';
+import { GetAPIClients, GetAPICompanies } from "./GetAPI.js";
 
 import ClientView from "./pages/ClientView";
 import CompanyView from "./pages/CompanyView";
 import HomeView from "./pages/HomeView";
 
-
 const App = () => {
+
+  const [active, setActive] = React.useState(1);
+  const SetView = (active) => {
+    setActive(active);
+  };
+
+  const ActiveView = () => {
+    switch (active) {
+      case 1:
+        return <HomeView />;
+      case 2:
+        return <ClientView guid={null} />;
+      case 3:
+        return <CompanyView guid={null} />;
+      default:
+        return <HomeView />;
+    }
+  };
+
   return (
-    <>
-      <ResponsiveSideBar />
-      <Routes>
-        <Route path='/' element={<HomeView />} />
-        <Route path='/ClientView' element={<ClientView guid={"f1aed79f-a6b0-46ed-99ae-785b5c4ca991"} />} />
-        <Route path='/CompanyView' element={<CompanyView symbol={"ADP"} />} />
-      </Routes>
-    </>
+    <div className="button-toolbar">
+      <h3>{active}</h3>
+      <button className="button" onClick={() => SetView(1)}>Home</button>
+      <button className="button" onClick={() => SetView(2)}>Client</button>
+      <button className="button" onClick={() => SetView(3)}>Company</button>
+      {ActiveView()}
+  </div>
   );
 }
 

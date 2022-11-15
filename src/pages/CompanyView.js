@@ -9,9 +9,19 @@ const CompanyView = ({ symbol }) => {
     const [companyHistory, setCompanyHistory] = useState([]);
     const [companyState, setCompanyState] = useState('');
 
+    let url_company_history = "";
+    let url_company_state = "";
+    if (symbol != null ? (
+        url_company_history = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol="+symbol,
+        url_company_state = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/companies.php?symbol="+symbol
+    ) : (
+        url_company_history = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol=ORCL",
+        url_company_state= "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/companies.php?symbol=ORCL"
+    ));
+
     const getCompanyHistory = () => {
         axios
-        .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol="+symbol)
+        .get(url_company_history)
         .then((response) => {
             /*console.log(response.data);*/
             setCompanyHistory(response.data);
@@ -22,7 +32,7 @@ const CompanyView = ({ symbol }) => {
     }
     const getCompanyState = () => {
         axios
-        .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/companies.php?symbol="+symbol)
+        .get(url_company_state)
         .then((response) => {
             /*console.log(response.data);*/
             setCompanyState(response.data);

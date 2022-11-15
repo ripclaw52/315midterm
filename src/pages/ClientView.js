@@ -7,9 +7,21 @@ const ClientView = ({ guid }) => {
     let [client, setClient] = useState([]);
     let [portfolio, setPortfolio] = useState([]);
 
+    let url_client = "";
+    let url_portfolio = "";
+    if (guid != null ? (
+        url_client = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/client.php?user="+guid,
+        url_portfolio = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/portfolio.php?user="+guid
+        ) : (
+        url_client = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/client.php?id=1",
+        url_portfolio = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/portfolio.php?id=1"
+        )
+    );
+    
+
     const getClientData = () => {
         axios
-        .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/client.php?user="+guid)
+        .get(url_client)
         .then((response) => {
             //console.log(response.data);
             setClient(response.data);
@@ -21,7 +33,7 @@ const ClientView = ({ guid }) => {
 
     const getPortfolioData = () => {
         axios
-        .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/portfolio.php?user="+guid)
+        .get(url_portfolio)
         .then((response) => {
             //console.log(response.data);
             setPortfolio(response.data);
@@ -39,17 +51,18 @@ const ClientView = ({ guid }) => {
     //console.log(`clientview_c: ${client}`);
     //console.log(`clientview_p ${portfolio}`);
 
-    let copiedPortfolio = JSON.parse(JSON.stringify(portfolio));
-    copiedPortfolio.sort(function(a, b){return b.value - a.value});
+    let copyPortfolio = JSON.parse(JSON.stringify(portfolio));
+    copyPortfolio.sort(function(a, b){return b.value - a.value});
+    let copiedPortfolio = copyPortfolio.slice(0, 3);
     //console.table(copiedPortfolio);
     //console.table(portfolio);
 
     return (
         <>
-            <StockCard />
-        {
-            <PortfolioDetails list={portfolio} />
-        }
+        { copiedPortfolio.map(copyPort =>
+            <StockCard key={copyPort.symbol} symbol={copyPort.symbol} name={copyPort.name} />
+        ) }
+        { <PortfolioDetails list={portfolio} /> }
         </>
     );
 }

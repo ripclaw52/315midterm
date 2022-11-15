@@ -2,10 +2,10 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import React, { useState, useEffect } from "react";
 
 const PortfolioDetails = ({ list }) => {
-    console.log(list);
+    //console.log(list);
 
     const handleClick = (event, symbol) => {
-        console.log(symbol);
+        //console.log(symbol);
     }
 
     const displayTable = () => {
@@ -36,13 +36,14 @@ const PortfolioDetails = ({ list }) => {
                                 hover
                                 onClick={(event) => handleClick(event, i.symbol)}
                                 key={i.symbol}
+                                value={i.symbol}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="i">{i.symbol}</TableCell>
                                 <TableCell align="right">{i.name}</TableCell>
-                                <TableCell align="right">{i.close}</TableCell>
+                                <TableCell align="right">{ parseFloat(i.close).toFixed(2) }</TableCell>
                                 <TableCell align="right">{i.amount}</TableCell>
-                                <TableCell align="right">{i.value}</TableCell>
+                                <TableCell align="right">{ parseFloat(i.value).toFixed(2) }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
