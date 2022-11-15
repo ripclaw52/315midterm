@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 import axios from "axios";
-import PlotlyGraph from "./PlotlyGraph";
-import CompanyDetails from "./CompanyDetails";
+import PlotlyGraph from "../components/PlotlyGraph"
+import CompanyDetails from "../components/CompanyDetails";
 import { bgcolor } from "@mui/system";
 
 const CompanyView = ({ symbol }) => {

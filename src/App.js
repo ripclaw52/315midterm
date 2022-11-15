@@ -1,23 +1,22 @@
-import { Container } from '@mui/material';
-import TitleBar from './components/TitleBar';
-import HomeView from './components/HomeView';
-import ClientView from './components/ClientView';
-import PlotlyGraph from './components/PlotlyGraph';
-import CompanyView from './components/CompanyView';
+import React from "react";
+import './App.css';
+import ResponsiveSideBar from "./components/ResponsiveSideBar";
+import { Route, Routes } from 'react-router';
 
-function App() {
+import ClientView from "./pages/ClientView";
+import CompanyView from "./pages/CompanyView";
+import HomeView from "./pages/HomeView";
+
+
+const App = () => {
   return (
     <>
-    <CompanyView symbol={"A"}/>
-    {/*
-      <div>
-        <TitleBar props={"Home - CMPT 315 Midterm"} />
-        <Container >
-          <HomeView />
-          <ClientView />
-        </Container>
-      </div>
-      */}
+      <ResponsiveSideBar />
+      <Routes>
+        <Route path='/' element={<HomeView />} />
+        <Route path='/ClientView' element={<ClientView guid={"f1aed79f-a6b0-46ed-99ae-785b5c4ca991"} />} />
+        <Route path='/CompanyView' element={<CompanyView symbol={"ADP"} />} />
+      </Routes>
     </>
   );
 }
