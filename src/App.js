@@ -1,18 +1,19 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import './App.css';
-import { GetAPIClients, GetAPICompanies } from "./GetAPI.js";
+import SwitchViews from "./SwitchViews";
 
 import ClientView from "./pages/ClientView";
 import CompanyView from "./pages/CompanyView";
 import HomeView from "./pages/HomeView";
 
 const App = () => {
-
-  const [active, setActive] = React.useState(1);
+  const [activeView, setActiveView] = useState("home");
+  const [active, setActive] = useState(1);
   const SetView = (active) => {
-    setActive(active);
+    setActiveView(active);
   };
 
   const ActiveView = () => {
@@ -22,20 +23,34 @@ const App = () => {
       case 2:
         return <ClientView guid={null} />;
       case 3:
-        return <CompanyView guid={null} />;
+        return <CompanyView symbol={null} />;
       default:
         return <HomeView />;
     }
   };
 
   return (
-    <div className="button-toolbar">
+    <>
+    <div>
+      <button className="button" onClick={() => SetView("home")}>Home</button>
+      <button className="button" onClick={() => SetView("client")}>Client</button>
+      <button className="button" onClick={() => SetView("company")}>Company</button>
+    </div>
+    <SwitchViews active={activeView}>
+      <HomeView name="home" />
+      <ClientView name="client" />
+      <CompanyView name="company" />
+    </SwitchViews>
+    </>
+    /*
+    <div className="button-toolbar" aria-orientation="vertical">
       <h3>{active}</h3>
       <button className="button" onClick={() => SetView(1)}>Home</button>
       <button className="button" onClick={() => SetView(2)}>Client</button>
       <button className="button" onClick={() => SetView(3)}>Company</button>
       {ActiveView()}
-  </div>
+    </div>
+    */
   );
 }
 

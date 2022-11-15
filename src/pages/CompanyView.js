@@ -9,6 +9,7 @@ import axios from "axios";
 import PlotlyGraph from "../components/PlotlyGraph"
 import CompanyDetails from "../components/CompanyDetails";
 import CompanyFinancials from "../components/CompanyFinancials";
+import TitleBar from "../components/TitleBar";
 
 const CompanyView = ({ symbol }) => {
     const [companyHistory, setCompanyHistory] = useState([]);
@@ -48,16 +49,18 @@ const CompanyView = ({ symbol }) => {
     }
 
     useEffect(() => {
-        getCompanyHistory();
         getCompanyState();
+        getCompanyHistory();
     }, []);
+
+    if ((companyState.length > 0) && (companyHistory.length > 0)) {
 
     let finance = JSON.parse(JSON.stringify(companyState));
     //console.log(finance[0].financials.years);
 
-    if (companyHistory.length >= 1) {
     return (
         <>
+        <TitleBar titleName={companyState[0].name} />
             <CompanyDetails companyDetails={finance[0]} />
             <CompanyFinancials financials={finance[0].financials}/>
 

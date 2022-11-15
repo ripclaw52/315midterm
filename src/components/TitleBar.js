@@ -4,13 +4,13 @@ import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const TitleBar = ({ props }) => {
+const TitleBar = ({ titleName }) => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Typography variant="h5" component="div" align="center" sx={{ flexGrow: 1 }}>
-          {props}
+          {titleName}
         </Typography>
       </Toolbar>
       </Container>

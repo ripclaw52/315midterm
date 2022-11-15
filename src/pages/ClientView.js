@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PortfolioDetails from "../components/PortfolioDetails";
 import StockCard from "../components/StockCard";
+import TitleBar from "../components/TitleBar";
 
 const ClientView = ({ guid }) => {
     let [client, setClient] = useState([]);
@@ -51,6 +52,12 @@ const ClientView = ({ guid }) => {
     //console.log(`clientview_c: ${client}`);
     //console.log(`clientview_p ${portfolio}`);
 
+    if ((client.length > 0) && (portfolio.length > 0)) {
+
+    let clientName = JSON.parse(JSON.stringify(client));
+    //console.log(clientName);
+    let clientFullname = `${clientName[0].firstname} ${clientName[0].lastname}`;
+
     let copyPortfolio = JSON.parse(JSON.stringify(portfolio));
     copyPortfolio.sort(function(a, b){return b.value - a.value});
     let copiedPortfolio = copyPortfolio.slice(0, 3);
@@ -59,11 +66,13 @@ const ClientView = ({ guid }) => {
 
     return (
         <>
+        <TitleBar titleName={clientFullname} />
         { copiedPortfolio.map(copyPort =>
             <StockCard key={copyPort.symbol} symbol={copyPort.symbol} name={copyPort.name} />
         ) }
         { <PortfolioDetails list={portfolio} /> }
         </>
     );
+    }
 }
 export default ClientView;

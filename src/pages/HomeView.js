@@ -6,10 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ClientView from "./ClientView";
+import TitleBar from "../components/TitleBar";
 
 const HomeView = ({ active }) => {
     const [data, setData] = useState([]);
-
     const [value, setValue] = useState('');
 
     const getAllClientData = () => {
@@ -29,13 +29,12 @@ const HomeView = ({ active }) => {
 
     const handleChange = (e) => {
         setValue(e.target.value);
-        //console.log(e.target.value);
+        console.log(e.target.value);
     };
 
     return (
         <>
-        {
-            (value === 1 || value === '') ? (
+        <TitleBar titleName={"Home - React Midterm Project"}/>
             <div className="HomeView">
                 <Box sx={{ maxWidth: 800 }}>
                     <FormControl fullWidth margin="normal" size="string" variant="filled">
@@ -52,10 +51,6 @@ const HomeView = ({ active }) => {
                     </FormControl>
                 </Box>
             </div>
-            ) : (
-                <ClientView guid={value} />
-            )
-        }
         </>
     );
 }
