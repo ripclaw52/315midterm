@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ClientDetails from "../components/ClientDetails";
+import CompanyView from "./CompanyView";
 import PortfolioSummary from "../components/PortfolioSummary";
 import TitleBar from "../components/TitleBar";
 
@@ -17,9 +18,9 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
 const ClientView = ({ guid }) => {
+    const [client, setClient] = useState([]);
+    const [portfolio, setPortfolio] = useState([]);
     const [value, setValue] = useState('');
-    let [client, setClient] = useState([]);
-    let [portfolio, setPortfolio] = useState([]);
 
     let url_client = "";
     let url_portfolio = "";
@@ -59,9 +60,8 @@ const ClientView = ({ guid }) => {
         getPortfolioData();
     }, []);
 
-    const handleClick = (e, symbol) => {
-        setValue(e.target.value);
-        console.log(symbol);
+    const handleClick = (event, symbol) => {
+        setValue(symbol);
     };
 
     //console.log(`clientview_c: ${client}`);
@@ -76,17 +76,17 @@ const ClientView = ({ guid }) => {
     let copiedPortfolio = copyPortfolio.slice(0, 3);
     //console.table(copiedPortfolio);
     //console.table(portfolio);
+
     const displayStockCard = (name, symbol) => {
         return (
         <Card
             sx={{ maxWidth: 345 }}
             id={symbol}
-            value={name}
+            value={symbol}
             key={symbol}
+            onClick={(event) => handleClick(event, symbol)}
             >
-            <CardActionArea
-                onClick={(event) => handleClick(event, symbol)}
-            >
+            <CardActionArea>
                 <CardContent>
                     <Typography
                         variant="h3"
@@ -135,7 +135,7 @@ const ClientView = ({ guid }) => {
                                 value={i.symbol}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="i">{i.symbol}</TableCell>
+                                <TableCell component="th" scope="row">{i.symbol}</TableCell>
                                 <TableCell align="right">{i.name}</TableCell>
                                 <TableCell align="right">{ parseFloat(i.close).toFixed(2) }</TableCell>
                                 <TableCell align="right">{i.amount}</TableCell>
@@ -150,6 +150,9 @@ const ClientView = ({ guid }) => {
 
     return (
         <>
+        {
+        (value === '') ? (
+        <>
         <TitleBar titleName={clientFullname} />
         <ClientDetails clientList={clientName}/>
         <PortfolioSummary portfolioList={copyPortfolio}/>
@@ -157,6 +160,13 @@ const ClientView = ({ guid }) => {
             displayStockCard(i.name, i.symbol)
         ) }
         { displayTable() }
+        </>
+        ) : (
+        <>
+        <CompanyView symbol={value} />
+        </>
+        )
+        }
         </>
     );
     }
