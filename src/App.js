@@ -9,21 +9,32 @@ import ClientView from "./pages/ClientView";
 import CompanyView from "./pages/CompanyView";
 import HomeView from "./pages/HomeView";
 
+import Button from "@mui/material/Button";
+
 const App = () => {
   const [client, setClient] = useState(null);
   const [company, setCompany] = useState(null);
   const [activeView, setActiveView] = useState("home");
 
   const SetView = (active) => {
+    if (active === "home") { SetClient(null); }
+    if (active === "client") { SetCompany(null); }
     setActiveView(active);
+  };
+
+  const SetClient = (temp) => {
+    setClient(temp);
+  };
+  const SetCompany = (temp) => {
+    setCompany(temp);
   };
 
   return (
     <>
-    <div className="appSideBar" >
-      <button className="button" onClick={() => SetView("home")}>Home</button>
-      <button className="button" onClick={() => SetView("client")}>Client</button>
-      <button className="button" onClick={() => SetView("company")}>Company</button>
+    <div className="sidebar" >
+      <Button className="button" onClick={() => SetView("home")} >Home</Button>
+      <Button className="button" onClick={() => SetView("client")}>Client</Button>
+      <Button className="button" onClick={() => SetView("company")}>Company</Button>
     </div>
     <SwitchViews active={activeView}>
       <HomeView name="home" />

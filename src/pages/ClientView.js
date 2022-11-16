@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ClientDetails from "../components/ClientDetails";
-import PortfolioDetails from "../components/PortfolioDetails";
 import PortfolioSummary from "../components/PortfolioSummary";
-import StockCard from "../components/StockCard";
 import TitleBar from "../components/TitleBar";
 
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+
 const ClientView = ({ guid }) => {
+    const [value, setValue] = useState('');
     let [client, setClient] = useState([]);
     let [portfolio, setPortfolio] = useState([]);
 
@@ -20,7 +31,6 @@ const ClientView = ({ guid }) => {
         url_portfolio = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/portfolio.php?id=1"
         )
     );
-    
 
     const getClientData = () => {
         axios
@@ -33,7 +43,6 @@ const ClientView = ({ guid }) => {
             console.log(error);
         });
     }
-
     const getPortfolioData = () => {
         axios
         .get(url_portfolio)
@@ -45,36 +54,109 @@ const ClientView = ({ guid }) => {
             console.log(error);
         })
     }
-
     useEffect(() => {
         getClientData();
         getPortfolioData();
     }, []);
 
+    const handleClick = (e, symbol) => {
+        setValue(e.target.value);
+        console.log(symbol);
+    };
+
     //console.log(`clientview_c: ${client}`);
     //console.log(`clientview_p ${portfolio}`);
 
     if ((client.length > 0) && (portfolio.length > 0)) {
-
     let clientName = JSON.parse(JSON.stringify(client));
     //console.log(clientName);
     let clientFullname = `${clientName[0].firstname} ${clientName[0].lastname}`;
-
     let copyPortfolio = JSON.parse(JSON.stringify(portfolio));
     copyPortfolio.sort(function(a, b){return b.value - a.value});
     let copiedPortfolio = copyPortfolio.slice(0, 3);
     //console.table(copiedPortfolio);
     //console.table(portfolio);
+    const displayStockCard = (name, symbol) => {
+        return (
+        <Card
+            sx={{ maxWidth: 345 }}
+            id={symbol}
+            value={name}
+            key={symbol}
+            >
+            <CardActionArea
+                onClick={(event) => handleClick(event, symbol)}
+            >
+                <CardContent>
+                    <Typography
+                        variant="h3"
+                        align="center"
+                    >
+                        {symbol}
+                    </Typography>
+                    <Typography
+                        variant="subtitle1"
+                        align="center"
+                    >
+                        {name}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+        )
+    }
+
+    const displayTable = () => {
+        return (
+            <TableContainer component={Paper}>
+                <Table >
+                    <TableHead >
+                        <TableRow
+                            sx={{
+                                borderBottom: 1.5,
+                                borderColor: "darkgray",
+                                backgroundColor: "lightgrey",
+                            }}
+                        >
+                            <TableCell>Symbol</TableCell>
+                            <TableCell align="right">Company</TableCell>
+                            <TableCell align="right">Close</TableCell>
+                            <TableCell align="right">Amount</TableCell>
+                            <TableCell align="right">Total Value</TableCell>
+                        </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                        {portfolio.map((i) => (
+                            <TableRow
+                                hover
+                                onClick={(event) => handleClick(event, i.symbol)}
+                                key={i.symbol}
+                                value={i.symbol}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="i">{i.symbol}</TableCell>
+                                <TableCell align="right">{i.name}</TableCell>
+                                <TableCell align="right">{ parseFloat(i.close).toFixed(2) }</TableCell>
+                                <TableCell align="right">{i.amount}</TableCell>
+                                <TableCell align="right">{ parseFloat(i.value).toFixed(2) }</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        );
+    }
 
     return (
         <>
         <TitleBar titleName={clientFullname} />
         <ClientDetails clientList={clientName}/>
         <PortfolioSummary portfolioList={copyPortfolio}/>
-        { copiedPortfolio.map(copyPort =>
-            <StockCard value={copyPort.symbol} key={copyPort.symbol} symbol={copyPort.symbol} name={copyPort.name} />
+        { copiedPortfolio.map(i =>
+            displayStockCard(i.name, i.symbol)
         ) }
-        { <PortfolioDetails list={portfolio} /> }
+        { displayTable() }
         </>
     );
     }

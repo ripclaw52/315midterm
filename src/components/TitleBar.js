@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 const TitleBar = ({ titleName }) => {
   return (
-    <AppBar position="static">
+    <AppBar className="TitleBar" position="static">
       <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Typography variant="h5" component="div" align="center" sx={{ flexGrow: 1 }}>

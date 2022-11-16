@@ -10,10 +10,9 @@ import Select from '@mui/material/Select';
 import TitleBar from "../components/TitleBar";
 
 const HomeView = () => {
-    
     const [data, setData] = useState([]);
     const [value, setValue] = useState('');
-
+    
     const getAllClientData = () => {
         axios
         .get("https://www.randyconnolly.com/funwebdev/3rd/api/stocks/client.php")
@@ -31,11 +30,14 @@ const HomeView = () => {
 
     const handleChange = (e) => {
         setValue(e.target.value);
-        console.log(e.target.value);
+        //console.log(e.target.value);
     };
 
     if (data.length > 0) {
     return (
+        <>
+        {
+        (value === '') ? (
         <>
         <TitleBar titleName={"Home - React Midterm Project"}/>
             <div className="HomeView">
@@ -54,7 +56,13 @@ const HomeView = () => {
                     </FormControl>
                 </Box>
             </div>
+            </>
+         ) : (
+        <>
+        <ClientView guid={value} />
         </>
+        )}
+    </>
     );
     }
 }
