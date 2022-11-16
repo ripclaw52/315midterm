@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
@@ -16,8 +15,10 @@ const CompanyFinancials = ({ financials }) => {
     let usd = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD"
-      });
+    });
 
+    if(financials != null) {
+    
     let newFinancials = [];
     for (let i=0; i<3; i++) {
         newFinancials[i] = {
@@ -63,15 +64,15 @@ const CompanyFinancials = ({ financials }) => {
         </Card>
         </>
     );
+    } else {
+        return (
+            <>
+                <Card className="CompanyFinancials" variant="outlined" >
+                    <Typography variant='h5' >Financials</Typography>
+                    <Typography variant="caption">No financial information provided</Typography>
+                </Card>
+            </>
+        );
+    };
 }
 export default CompanyFinancials;
-
-/*
-            <ul>
-                <li>{financials.years}</li>
-                <li>{financials.revenue}</li>
-                <li>{financials.earnings}</li>
-                <li>{financials.assets}</li>
-                <li>{financials.liabilities}</li>
-            </ul>
-*/

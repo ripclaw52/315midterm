@@ -1,0 +1,52 @@
+body {
+    background-color: azure;
+}
+
+.TitleBar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar {
+    padding-left: 20px;
+    padding-top: 100px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+div .sidebar Button {
+    display: flex;
+    align-self: auto;
+    display: block;
+    color: cadetblue;
+}
+
+div .sidebar Button:hover {
+    display: flex;
+    background-color: darkgray;
+    color: currentColor;
+}
+
+div .HomeView {
+    position: relative;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: -100px;
+}
+
+div .ClientView {
+    position: relative;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: -100px;
+}
+
+div .CompanyView {
+    position: relative;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: -100px;
+}

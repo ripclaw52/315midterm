@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+import "../App.css";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import axios from "axios";
 
@@ -60,20 +62,36 @@ const CompanyView = ({ symbol }) => {
 
     return (
         <>
+        
         <TitleBar titleName={companyState[0].name} />
-            <CompanyDetails companyDetails={finance[0]} />
-            <CompanyFinancials financials={finance[0].financials}/>
+        <div className="CompanyView">
+            <Grid container rowSpacing={6} columnSpacing={3}>
+                <Grid item xs={4}>
+                    <CompanyDetails companyDetails={finance[0]} />
+                </Grid>
+                <Grid item xs={8}>
+                    <Card className="CompanyCard" variant="outlined" >
+                        <CardContent>
+                            <PlotlyGraph history={companyHistory} type={"high+low"} />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+            <br></br>
 
-            <Card className="CompanyCard" variant="outlined" >
-                <CardContent>
-                    <PlotlyGraph history={companyHistory} type={"high+low"} />
-                </CardContent>
-            </Card>
-            <Card className="CompanyCard" variant="outlined" >
-                <CardContent>
-                    <PlotlyGraph history={companyHistory} type={"volume"} />
-                </CardContent>
-            </Card>
+            <Grid container rowSpacing={6} columnSpacing={3}>
+                <Grid item xs={4}>
+                    <CompanyFinancials financials={finance[0].financials}/>
+                </Grid>
+                <Grid item xs={8}>
+                    <Card className="CompanyCard" variant="outlined" >
+                        <CardContent>
+                            <PlotlyGraph history={companyHistory} type={"volume"} />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+        </div>
         </>
         );
     }

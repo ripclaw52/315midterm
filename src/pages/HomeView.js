@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../App.css";
 import ClientView from "./ClientView";
+import TitleBar from "../components/TitleBar";
 
 import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import Grid from "@mui/material/Grid";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import TitleBar from "../components/TitleBar";
 
 const HomeView = () => {
     const [data, setData] = useState([]);
@@ -39,9 +41,14 @@ const HomeView = () => {
         {
         (value === '') ? (
         <>
-        <TitleBar titleName={"Home - React Midterm Project"}/>
+            <TitleBar titleName={"Home - React Midterm Project"}/>
             <div className="HomeView">
-                <Box sx={{ maxWidth: 800 }}>
+                <Grid
+                    container
+                    justifyContent="center"
+                    alignItems="stretch"
+                >
+                <Box display="grid" item="true" sx={{ minWidth: 1000 }}>
                     <FormControl fullWidth margin="normal" size="string" variant="filled">
                         <InputLabel id="demo-simple-select-label">Choose a Client</InputLabel>
                         <Select
@@ -55,6 +62,7 @@ const HomeView = () => {
                         </Select>
                     </FormControl>
                 </Box>
+                </Grid>
             </div>
             </>
          ) : (

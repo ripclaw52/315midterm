@@ -1,6 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 
 import './App.css';
 import SwitchViews from "./SwitchViews";
@@ -9,7 +8,9 @@ import ClientView from "./pages/ClientView";
 import CompanyView from "./pages/CompanyView";
 import HomeView from "./pages/HomeView";
 
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 const App = () => {
   const [client, setClient] = useState(null);
@@ -32,10 +33,27 @@ const App = () => {
   return (
     <>
     <div className="sidebar" >
-      <Button className="button" onClick={() => SetView("home")} >Home</Button>
-      <Button className="button" onClick={() => SetView("client")}>Client</Button>
-      <Button className="button" onClick={() => SetView("company")}>Company</Button>
+      <Box sx={{ flexGrow: 1}}>
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      >
+        <Grid>
+          <Button className="button" onClick={() => SetView("home")} >Home</Button>
+        </Grid>
+        <Grid>
+          <Button className="button" onClick={() => SetView("client")}>Client</Button>
+        </Grid>
+        <Grid>
+          <Button className="button" onClick={() => SetView("company")}>Company</Button>
+        </Grid>
+      </Grid>
+      </Box>
     </div>
+
     <SwitchViews active={activeView}>
       <HomeView name="home" />
       <ClientView name="client" guid={client} />

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../App.css";
+
 import ClientDetails from "../components/ClientDetails";
 import CompanyView from "./CompanyView";
 import PortfolioSummary from "../components/PortfolioSummary";
 import TitleBar from "../components/TitleBar";
 
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -79,30 +83,32 @@ const ClientView = ({ guid }) => {
 
     const displayStockCard = (name, symbol) => {
         return (
-        <Card
-            sx={{ maxWidth: 345 }}
-            id={symbol}
-            value={symbol}
-            key={symbol}
-            onClick={(event) => handleClick(event, symbol)}
-            >
-            <CardActionArea>
-                <CardContent>
-                    <Typography
-                        variant="h3"
-                        align="center"
-                    >
-                        {symbol}
-                    </Typography>
-                    <Typography
-                        variant="subtitle1"
-                        align="center"
-                    >
-                        {name}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
+        <Grid item="true" xs={2} sm={3} md={4}>
+            <Card
+                sx={{ maxWidth: 400 }}
+                id={symbol}
+                value={symbol}
+                key={symbol}
+                onClick={(event) => handleClick(event, symbol)}
+                >
+                <CardActionArea>
+                    <CardContent>
+                        <Typography
+                            variant="h3"
+                            align="center"
+                        >
+                            {symbol}
+                        </Typography>
+                        <Typography
+                            variant="subtitle1"
+                            align="center"
+                        >
+                            {name}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </Grid>
         )
     }
 
@@ -154,12 +160,31 @@ const ClientView = ({ guid }) => {
         (value === '') ? (
         <>
         <TitleBar titleName={clientFullname} />
-        <ClientDetails clientList={clientName}/>
-        <PortfolioSummary portfolioList={copyPortfolio}/>
-        { copiedPortfolio.map(i =>
-            displayStockCard(i.name, i.symbol)
-        ) }
-        { displayTable() }
+        <Box >
+            <div className="ClientView">
+            <Grid container rowSpacing={6}>
+                <Grid item="true" xs={4}>
+                    <ClientDetails clientList={clientName}/>
+                </Grid>
+                <Grid container direction="row" justifyContent="space-evenly" item="true" xs={8}>
+                    { copiedPortfolio.map(i =>
+                        displayStockCard(i.name, i.symbol)
+                    ) }
+                </Grid>
+            </Grid>
+            <br></br>
+            <br></br>
+
+            <Grid container rowSpacing={6}>
+                <Grid item="true" xs={4}>
+                    <PortfolioSummary portfolioList={copyPortfolio}/>
+                </Grid>
+                <Grid item="true" xs={8}>
+                    { displayTable() }
+                </Grid>
+            </Grid>
+            </div>
+        </Box>
         </>
         ) : (
         <>
